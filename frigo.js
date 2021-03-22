@@ -23,9 +23,9 @@ function afficherProduits(event) {
                         '<caption>Contenu du Frigo</caption>'+
                         "<thead>"+
                           "<tr>"+
-                            "<th>Élément</th>"+
-                            "<th>Quantité</th>"+
-                            "<th>Modification</th>"+
+                            '<th class="caseElement">Élément</th>'+
+                            '<th class="caseQuantite">Quantité</th>'+
+                            '<th class="caseModification">Modification</th>'+
                           "</tr>"+
                         "</thead>"+
                       "</table>"+
@@ -33,11 +33,11 @@ function afficherProduits(event) {
                     '<div class="tbl-content">'+
                       '<table cellpadding="0" cellspacing="0" border="0">';
     for (let produit of produits){
-      texteHTML += "<tr><td>" + produit.nom + "</td>";
-      texteHTML += "<td>" + produit.qte + "</td>";
-      texteHTML += '<td><form id="TableauProduit"><input type="button" id="plus'+produit.id+'" value="plus 1" onclick="ajouter1Produit('+produit.id+')">'+
-      '<input type="button" id="moins'+produit.id+'" value="moins 1" onclick="enlever1Produit('+produit.id+')">'+
-      '<input type="button" id="del'+produit.id+'" value="supprimer" onclick="supprimerProduit('+produit.id+')"></form></td></tr>';
+      texteHTML += '<tr><td class="caseElement">' + produit.nom + "</td>";
+      texteHTML += '<td class="caseQuantite">' + produit.qte + "</td>";
+      texteHTML += '<td class="caseModification"><form id="TableauProduit"><input type="button" id="plus1" value="plus 1" onclick="ajouter1Produit('+produit.id+')">'+
+      '<input type="button" id="moins1" value="moins 1" onclick="enlever1Produit('+produit.id+')">'+
+      '<input type="button" id="supprimer" value="supprimer" onclick="supprimerProduit('+produit.id+')"></form></td></tr>';
 
     }
     texteHTML += "</table></div>";
@@ -53,10 +53,10 @@ function afficheFormProduits(event) {
   let textForm = '<form id="formAjout">'+
                     '<fieldset>'+
                       '<legend>Ajouter un nouveau produit</legend>'+
-                      '<label>Nom : </label><input id="nom" type="text" />'+
-                      '<label>Quantité : </label><input id="quantite" type="number" min="1" max="50" placeholder="1~50" />'+
-                      '<input type="button" id="enregistrer" value="Ajouter" onclick="ajouterProduits()">'+
-                      '<input type="button" id="enregistrer" value="Retour" onclick="afficherProduits()">'+
+                      '<label class="form__label">Nom : </label><input id="nom" type="text" class="form__field"/>'+
+                      '<label class="form__label">Quantité : </label><input id="quantite" type="number" min="1" max="50" placeholder="1~50" class="form__field" />'+
+                      '<input type="button" class="boutonForm" id="enregistrer" value="Ajouter" onclick="ajouterProduits()">'+
+                      '<input type="button" class="boutonForm" id="retour" value="Retour" onclick="afficherProduits()">'+
                     '</fieldset>'+
                   '</form>';
   document.getElementById("affichage").innerHTML = textForm;
@@ -190,6 +190,11 @@ function loadNomProduits(event) {
   })
   .then((data) => {
     let produits = data;
+     produits.sort(function compare(a, b) {
+        if (a.nom < b.nom) return -1;
+        if (a.nom > b.nom) return 1;
+        return 0;
+      });
     for(let produit of produits){
       texteOptions += '<option value="'+ produit.nom +'"> </option>';
     }
@@ -207,10 +212,10 @@ function afficheFormRecherche(event) {
   let textForm = '<form id="formSearch">'+
                     '<fieldset>'+
                       '<legend>Rechercher un produit</legend>'+
-                      '<label for="frigo">Nom : </label><input id="searchNom" type="text" list="listeProduit" />'+
+                      '<label for="frigo" class="form__label">Nom : </label><input class="form__field" id="searchNom" type="text" list="listeProduit" />'+
                           '<datalist id="listeProduit"></datalist>'+
-                      '<input type="button" id="enregistrer" value="Chercher" onclick="rechercherProduit()">'+
-                      '<input type="button" id="enregistrer" value="Retour" onclick="afficherProduits()">'+
+                      '<input type="button" class="boutonForm" id="enregistrer" value="Chercher" onclick="rechercherProduit()">'+
+                      '<input type="button" class="boutonForm" id="retour" value="Retour" onclick="afficherProduits()">'+
                     '</fieldset>'+
                   '</form>';
   document.getElementById("affichage").innerHTML = textForm;
@@ -243,9 +248,9 @@ function rechercherProduit(event) {
                           '<div class="tbl-content">'+
                             '<table cellpadding="0" cellspacing="0" border="0">'+
                               "<tr><td>" + produit.nom + "</td><td>" + produit.qte + "</td>";
-    texteRecherche += '<td><form><input type="button" id="plus'+produit.id+'" value="plus 1" onclick="ajouter1Produit('+produit.id+')">'+
-      '<input type="button" id="moins'+produit.id+'" value="moins 1" onclick="enlever1Produit('+produit.id+')">'+
-      '<input type="button" id="del'+produit.id+'" value="supprimer" onclick="supprimerProduit('+produit.id+')"></form></td></tr></table></div>';
+    texteRecherche += '<td><form id="TableauProduit"><input type="button" id="plus1" value="plus 1" onclick="ajouter1Produit('+produit.id+')">'+
+      '<input type="button" id="moins1" value="moins 1" onclick="enlever1Produit('+produit.id+')">'+
+      '<input type="button" id="supprimer" value="supprimer" onclick="supprimerProduit('+produit.id+')"></form></td></tr></table></div>';
     document.getElementById("affichage").innerHTML = texteRecherche;
   })
   .catch((error) => {
