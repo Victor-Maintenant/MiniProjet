@@ -238,17 +238,17 @@ function rechercherProduit(event) {
                               '<caption>Contenu du Frigo</caption>'+
                               "<thead>"+
                                 "<tr>"+
-                                  "<th>Élément</th>"+
-                                  "<th>Quantité</th>"+
-                                  "<th>Modification</th>"+
+                                  '<th class="caseElement">Élément</th>'+
+                                  '<th class="caseQuantite">Quantité</th>'+
+                                  '<th class="caseModification">Modification</th>'+
                                 "</tr>"+
                               "</thead>"+
                             "</table>"+
                           "</div>"+
                           '<div class="tbl-content">'+
                             '<table cellpadding="0" cellspacing="0" border="0">'+
-                              "<tr><td>" + produit.nom + "</td><td>" + produit.qte + "</td>";
-    texteRecherche += '<td><form id="TableauProduit"><input type="button" id="plus1" value="plus 1" onclick="ajouter1Produit('+produit.id+')">'+
+                              '<tr><td class="caseElement">' + produit.nom + '</td><td class="caseQuantite">' + produit.qte + "</td>";
+    texteRecherche += '<td class="caseModification"><form id="TableauProduit"><input type="button" id="plus1" value="plus 1" onclick="ajouter1Produit('+produit.id+')">'+
       '<input type="button" id="moins1" value="moins 1" onclick="enlever1Produit('+produit.id+')">'+
       '<input type="button" id="supprimer" value="supprimer" onclick="supprimerProduit('+produit.id+')"></form></td></tr></table></div>';
     document.getElementById("affichage").innerHTML = texteRecherche;
